@@ -1,3 +1,11 @@
+---
+title: Customizing the Debian Terminal
+date: 2025-07-20
+categories: [Ricing]
+tags: []     # TAG names should always be lowercase
+---
+
+
 # Customizing the Debian Terminal
 
 ## Introduction

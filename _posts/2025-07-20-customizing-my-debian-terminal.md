@@ -81,7 +81,9 @@ We have a couple different tabs on the left with settings we will want to change
 Now that we have that stuff out of the way, we can get to working on our prompt! We will want to open `~/.zshrc` with our favorite editor (personally, I will be using visual studio code). Once we open up our .zshrc file, we will want to add the following to the end:
 
 ```
+{% raw %}
 PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%F{%(#.red.blue)}%* %b%F{%(#.blue.green)}| %F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})-[%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+{% endraw %}
 ```
 This line will make our prompt look like the following:
 

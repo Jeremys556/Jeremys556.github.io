@@ -1,3 +1,5 @@
+# Customizing the Debian Terminal
+
 ## Introduction
 
 I would like to note before beginning that this is on Debian 12 with KDE Plasma as my desktop environment. The colors may not be the same if you are on a different desktop environment or if you use a different terminal emulator.

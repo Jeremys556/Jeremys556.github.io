@@ -3,9 +3,11 @@
 I would like to note before beginning that this is on Debian 12 with KDE Plasma as my desktop environment. The colors may not be the same if you are on a different desktop environment or if you use a different terminal emulator.
 
 Ever since I switched to Debian, I've been using the default shell configuration. Recently, after I riced my Kali VM up a bit, I was inspired to start doing some terminal ricing on my host Debian machine. In this process, I went from the default shell configuration that looks like this:
+
 ![Default Debian Terminal](/assets/images/default-debian-terminal.png)
 
 to one that looks like this:
+
 ![Customized Debian Terminal](/assets/images/customized-debian-terminal.png)
 
 ## Zsh
@@ -31,16 +33,22 @@ Konsole will be my terminal emulator of choice. There is no particular reason be
 ### Making a New Profile
 
 This step is required to run zsh instead of bash. Before we do this, we need to double check where our zsh is installed. To do this, we can use `which zsh`. Make sure to remember the directory it gives you. To start creating our new profile, we open Konsole, then on the top bar we click Settings then Manage Profiles.
+
 ![Manage Profiles Button Selected](/assets/images/manage-profiles-button-selected.png)
 
 Once we are on this page, we will click New on the right to start making a new profile.
 There are only a few options we need to change, those being the profile name, and the command.
 We can set the profile name to whatever we wish, I chose to use "Main".
 For the command, we want to use the directory that `which zsh` gave us. For me, this was `/usr/bin/zsh`. Make sure to check the 'Default profile' box so Konsole will launch into this profile by default. Once we are done in the General tab, it should look something like this:
+
 ![Finished Konsole Profile](/assets/images/new-debian-profile-finished.png)
+
 Additionally, if we click the Scrolling tab on the left, we can set our Scrollback to unlimited. I find this incredibly useful as sometimes commands will output very large amounts of text that's long enough to move previous commands beyond the scrollback distance.
+
 ![Scrollback Settings](/assets/images/scrollback-unlimited-setting.png)
+
 I also opted to uncheck "Highlight the lines coming into view setting" in this area. This will remove the blue lines on the left of the terminal when new text appears.
+
 ![Blue lines](/assets/images/blue-bar.png)
 
 ### Changing Misc. Konsole Settings
@@ -53,15 +61,20 @@ We have a couple different tabs on the left with settings we will want to change
 
 - General
   - Remember window size: unchecked
+    
 ![Konsole General Tab Config](/assets/images/konsole-general-config.png)
+
 - Tab Bar / Splitters
   - Show: Always
     - This will make the new tab button visible even when there is only 1 tab
   - Position: Above terminal area
   - Show 'New Tab' button: checked
+    
   ![Konsole Tab Bar / Splitters Config](/assets/images/konsole-tab-bar-config.png)
+
 - Temporary Files
   - Scrollback file location: User cache directory (~/.cache/konsole)
+ 
   ![Konsole Temporary Files Config](/assets/images/konsole-temp-files-config.png)
 
 ## .zshrc Prompt
@@ -71,7 +84,9 @@ Now that we have that stuff out of the way, we can get to working on our prompt!
 PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%F{%(#.red.blue)}%* %b%F{%(#.blue.green)}| %F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})-[%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%(#.%F{red}#.%F{blue}$)%b%F{reset} '
 ```
 This line will make our prompt look like the following:
+
 ![Finished Prompt Image](/assets/images/prompt-finished.png)
+
 I adapted this from Kali Linux's default prompt. If you are looking to customize this further, [this website](https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html) describes the custom variables usable inside the PROMPT variable.
 
 ## Setting up eza
@@ -110,14 +125,18 @@ This will make `ls` actually run `eza --icons --color=always --group-directories
 ### Installing Nerd Font Icons
 
 If we were to try it now, we would see this:
+
 ![Image of ls output no icons](/assets/images/ls-output-no-icon.png)
+
 What's up with all the icons!? They're not working! This is because we have not yet installed a font to allow these icons to appear correctly.
 We can download the font required [here](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.zip). Once this zip is downloaded, open it and install both .ttf files.
 
 Note: If you are getting an error about not being able to read the font, you likely need to switch from a Wayland session to an x11 session. Do this by logging out, clicking the session type in the bottom left, and switching it to x11. After this, log back in and try again.
 
 Now let's try it again.
+
 ![Image of ls output with icons](/assets/images/ls-output-with-icon.png)
+
 It works!
 
 ### Changing eza color output
@@ -130,13 +149,17 @@ export LS_COLORS
 If you want to change these colors around, I recommend looking [here](https://gist.github.com/thomd/7667642). This post does not mention it, but you can also change color per file extension. For example: `*.py=93` changes .py files to an unbolded yellow color. This color scheming was grabbed from Kali linux and then edited.
 
 After these changes, our `ls` should look like so:
+
 ![Image of unbolded ls](/assets/images/ls-output-unbolded.png)
+
 Looks great! Except for some of the symbols...
 
 ### Setting up eza config
 
 If you look closely, you will notice that some symbols aren't exactly what you would expect. For example, let's look at the symbols for .zip and other compressed file formats.
+
 ![Image of wrong icon for compressed files](/assets/images/ls-zip-icon-before.png)
+
 I believe this issue is caused due to the [seen icon](https://unicodes.jessetane.com/%EF%90%90) having the same Unicode code as the default zip icon used by eza. I also had issues with .jar files showing an eight-ball icon, but I did not have the same issue when recreating these steps in a virtual machine.
 
 First, we have to make the eza config: 
@@ -168,4 +191,5 @@ If you would like to customize these icons, I recognize reading [this](https://g
 
 ## Results
 That wraps it up! We should now have a terminal that looks like the following:
+
 ![Completed Terminal](/assets/images/finished-terminal-output.png)

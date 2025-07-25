@@ -7,6 +7,9 @@ tags: []     # TAG names should always be lowercase
 
 ## Introduction
 
+> This was done on Debian 12 with KDE Plasma as my desktop environment. The colors may not appear the same if you are on a different desktop environment or if you use a different terminal emulator.
+{: .prompt-info }
+
 I would like to note before beginning that this is on Debian 12 with KDE Plasma as my desktop environment. The colors may not be the same if you are on a different desktop environment or if you use a different terminal emulator.
 
 Ever since I switched to Debian, I've been using the default shell configuration. Recently, after I riced my Kali VM up a bit, I was inspired to start doing some terminal ricing on my host Debian machine. In this process, I went from the default shell configuration that looks like this:
@@ -85,9 +88,9 @@ We have a couple different tabs on the left with settings we will want to change
   ![Konsole Temporary Files Config](/assets/images/konsole-temp-files-config.png)
 
 ## .zshrc Prompt
-Now that we have that stuff out of the way, we can get to working on our prompt! We will want to open `~/.zshrc` with our favorite editor (personally, I will be using visual studio code). Once we open up our .zshrc file, we will want to add the following to the end:
+Now that we have that stuff out of the way, we can get to working on our prompt! We will want to open `~/.zshrc` with our favorite editor. Once we open up our .zshrc file, we will want to add the following to the end:
 
-```
+```bash
 {% raw %}
 PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%F{%(#.red.blue)}%* %b%F{%(#.blue.green)}| %F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})-[%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%(#.%F{red}#.%F{blue}$)%b%F{reset} '
 {% endraw %}
@@ -103,7 +106,7 @@ I adapted this from Kali Linux's default prompt. If you are looking to customize
 ### Installing
 To install eza, we can run the following commands:
 
-```
+```bash
 sudo apt update
 sudo apt install -y gpg
 sudo mkdir -p /etc/apt/keyrings
@@ -120,7 +123,7 @@ sudo apt install -y eza
 
 Next up, we can edit our .zshrc to tell it to replace the ls command with eza command. Open up .zshrc again and add the following lines:
 
-```
+```bash
 alias ls='eza --icons --color=always --group-directories-first'
 alias ll='eza -alF --icons --color=always --group-directories-first'
 alias la='eza -a --icons --color=always --group-directories-first'
@@ -140,7 +143,8 @@ If we were to try it now, we would see this:
 What's up with all the icons!? They're not working! This is because we have not yet installed a font to allow these icons to appear correctly.
 We can download the font required [here](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.zip). Once this zip is downloaded, open it and install both .ttf files.
 
-Note: If you are getting an error about not being able to read the font, you likely need to switch from a Wayland session to an x11 session. Do this by logging out, clicking the session type in the bottom left, and switching it to x11. After this, log back in and try again.
+> If you are getting an error about not being able to read the font, you likely need to switch from a Wayland session to an x11 session. Do this by logging out, clicking the session type in the bottom left, and switching it to x11. After this, log back in and try again.
+{: .prompt-tip }
 
 Now let's try it again.
 
@@ -151,7 +155,7 @@ It works!
 ### Changing eza color output
 
 Now I want to change some of the formatting and colors for the file names outputted by eza. Primarily, I would like to remove the bolding on file names (I hate the bolding style). To do this, we can add the following lines to our `.zshrc` file.
-```
+```bash
 LS_COLORS='rs=0:di=34:ln=36:mh=00:pi=40;33:so=35:do=35:bd=40;33;00:cd=40;33;00:or=40;31;00:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=32:*.tar=31:*.tgz=31:*.arc=31:*.arj=31:*.taz=31:*.lha=31:*.lz4=31:*.lzh=31:*.lzma=31:*.tlz=31:*.txz=31:*.tzo=31:*.t7z=31:*.zip=31:*.z=31:*.dz=31:*.gz=31:*.lrz=31:*.lz=31:*.lzo=31:*.xz=31:*.zst=31:*.tzst=31:*.bz2=31:*.bz=31:*.tbz=31:*.tbz2=31:*.tz=31:*.deb=31:*.rpm=31:*.jar=31:*.war=31:*.ear=31:*.sar=31:*.rar=31:*.alz=31:*.ace=31:*.zoo=31:*.cpio=31:*.7z=31:*.rz=31:*.cab=31:*.wim=31:*.swm=31:*.dwm=31:*.esd=31:*.avif=35:*.jpg=35:*.jpeg=35:*.mjpg=35:*.mjpeg=35:*.gif=35:*.bmp=35:*.pbm=35:*.pgm=35:*.ppm=35:*.tga=35:*.xbm=35:*.xpm=35:*.tif=35:*.tiff=35:*.png=35:*.svg=35:*.svgz=35:*.mng=35:*.pcx=35:*.mov=35:*.mpg=35:*.mpeg=35:*.m2v=35:*.mkv=35:*.webm=35:*.webp=35:*.ogm=35:*.mp4=35:*.m4v=35:*.mp4v=35:*.vob=35:*.qt=35:*.nuv=35:*.wmv=35:*.asf=35:*.rm=35:*.rmvb=35:*.flc=35:*.avi=35:*.fli=35:*.flv=35:*.gl=35:*.dl=35:*.xcf=35:*.xwd=35:*.yuv=35:*.cgm=35:*.emf=35:*.ogv=35:*.ogx=35:*.aac=36:*.au=36:*.flac=36:*.m4a=36:*.mid=36:*.midi=36:*.mka=36:*.mp3=36:*.mpc=36:*.ogg=36:*.ra=36:*.wav=36:*.oga=36:*.opus=36:*.spx=36:*.xspf=36:*~=90:*#=90:*.bak=90:*.old=90:*.orig=90:*.part=90:*.rej=90:*.swp=90:*.tmp=90:*.dpkg-dist=90:*.dpkg-old=90:*.ucf-dist=90:*.ucf-new=90:*.ucf-old=90:*.rpmnew=90:*.rpmorig=90:*.rpmsave=90:*.py=93'
 export LS_COLORS
 ```
@@ -172,15 +176,18 @@ If you look closely, you will notice that some symbols aren't exactly what you w
 I believe this issue is caused due to the [seen icon](https://unicodes.jessetane.com/%EF%90%90) having the same Unicode code as the default zip icon used by eza. I also had issues with .jar files showing an eight-ball icon, but I did not have the same issue when recreating these steps in a virtual machine.
 
 First, we have to make the eza config: 
-```
+```bash
 sudo mkdir /etc/eza
 sudo touch /etc/eza/theme.yml
 ```
 Then, we have to tell zshrc where this config is. Add the following line to your .zshrc:
 `export EZA_CONFIG_DIR=/etc/eza`
 
+> If you are using Visual Studio Code as your code editor, I highly recommend installing the [Fira Code Nerd Font / Icons](https://marketplace.visualstudio.com/items?itemName=Entuent.fira-code-nerd-font) extension to allow VSC to display the icons properly. Make sure to install it correctly as is shown in the extension's description.
+{: .prompt-tip }
+
 Now we can get to editing the icons! Open /etc/eza/theme.yml with your preferred editor and paste the following in and/or change it to your liking:
-```
+```yml
 extensions:
     jar: {icon: {glyph: }} #Uses 8ball icon for some reason
     log: {icon: {glyph: 󱂅}} #Normally uses 
@@ -195,10 +202,57 @@ extensions:
     tgz: {icon: {glyph: 󰿺}}
     xz: {icon: {glyph: 󰿺}}
 ```
-(You will be able to paste the icons properly even if your browser shows empty squares for the icons)
+(You will be able to paste the icons properly even if your browser shows the incorrect icons)
 If you would like to customize these icons, I recognize reading [this](https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md) and also looking at this [example theme file](https://github.com/eza-community/eza/blob/main/docs/theme.yml).
 
 ## Results
 That wraps it up! We should now have a terminal that looks like the following:
 
 ![Completed Terminal](/assets/images/finished-terminal-output.png)
+
+I have the completed files below for copy pasting!
+
+.zshrc:
+
+```bash
+{% raw %}
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="alanpeabody"
+
+plugins=()
+
+source $ZSH/oh-my-zsh.sh
+
+PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%F{%(#.red.blue)}%* %b%F{%(#.blue.green)}| %F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})-[%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+
+alias ls='eza --icons --color=always --group-directories-first'
+alias ll='eza -alF --icons --color=always --group-directories-first'
+alias la='eza -a --icons --color=always --group-directories-first'
+alias l='eza -F --icons --color=always --group-directories-first'
+alias l.='eza -a | egrep "^\."'
+alias tree='eza --icons --color=always --group-directories-first --tree'
+
+LS_COLORS='rs=0:di=34:ln=36:mh=00:pi=40;33:so=35:do=35:bd=40;33;00:cd=40;33;00:or=40;31;00:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=32:*.tar=31:*.tgz=31:*.arc=31:*.arj=31:*.taz=31:*.lha=31:*.lz4=31:*.lzh=31:*.lzma=31:*.tlz=31:*.txz=31:*.tzo=31:*.t7z=31:*.zip=31:*.z=31:*.dz=31:*.gz=31:*.lrz=31:*.lz=31:*.lzo=31:*.xz=31:*.zst=31:*.tzst=31:*.bz2=31:*.bz=31:*.tbz=31:*.tbz2=31:*.tz=31:*.deb=31:*.rpm=31:*.jar=31:*.war=31:*.ear=31:*.sar=31:*.rar=31:*.alz=31:*.ace=31:*.zoo=31:*.cpio=31:*.7z=31:*.rz=31:*.cab=31:*.wim=31:*.swm=31:*.dwm=31:*.esd=31:*.avif=35:*.jpg=35:*.jpeg=35:*.mjpg=35:*.mjpeg=35:*.gif=35:*.bmp=35:*.pbm=35:*.pgm=35:*.ppm=35:*.tga=35:*.xbm=35:*.xpm=35:*.tif=35:*.tiff=35:*.png=35:*.svg=35:*.svgz=35:*.mng=35:*.pcx=35:*.mov=35:*.mpg=35:*.mpeg=35:*.m2v=35:*.mkv=35:*.webm=35:*.webp=35:*.ogm=35:*.mp4=35:*.m4v=35:*.mp4v=35:*.vob=35:*.qt=35:*.nuv=35:*.wmv=35:*.asf=35:*.rm=35:*.rmvb=35:*.flc=35:*.avi=35:*.fli=35:*.flv=35:*.gl=35:*.dl=35:*.xcf=35:*.xwd=35:*.yuv=35:*.cgm=35:*.emf=35:*.ogv=35:*.ogx=35:*.aac=36:*.au=36:*.flac=36:*.m4a=36:*.mid=36:*.midi=36:*.mka=36:*.mp3=36:*.mpc=36:*.ogg=36:*.ra=36:*.wav=36:*.oga=36:*.opus=36:*.spx=36:*.xspf=36:*~=90:*#=90:*.bak=90:*.old=90:*.orig=90:*.part=90:*.rej=90:*.swp=90:*.tmp=90:*.dpkg-dist=90:*.dpkg-old=90:*.ucf-dist=90:*.ucf-new=90:*.ucf-old=90:*.rpmnew=90:*.rpmorig=90:*.rpmsave=90:*.py=93'
+export LS_COLORS
+
+export EZA_CONFIG_DIR=/etc/eza
+{% endraw %}
+```
+
+eza theme.yml:
+```yml
+extensions:
+  jar: {icon: {glyph: }}
+  log: {icon: {glyph: 󱂅}}
+
+  #Compressed file extensions
+  zip: {icon: {glyph: 󰿺}}
+  rar: {icon: {glyph: 󰿺}}
+  7z: {icon: {glyph: 󰿺}}
+  gz: {icon: {glyph: 󰿺}}
+  bz2: {icon: {glyph: 󰿺}}
+  tar.gz: {icon: {glyph: 󰿺}}
+  tgz: {icon: {glyph: 󰿺}}
+  xz: {icon: {glyph: 󰿺}}
+```
